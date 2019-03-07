@@ -5,16 +5,21 @@ import '../config/service_url.dart';
 
 //获取首页主体内容
 
-Future getHomePageContent() async {
+Future request(url, formData) async {
   try {
-    print('开始获取首页主体内容...............');
+    print('开始获取首数据...............');
     Response response;
     Dio dio = new Dio();
     //发送时候的请求类型
     dio.options.contentType =
         ContentType.parse("application/x-www-form-urlencoded");
-    var formData = {'lon': '115.02932', 'lat': '35.76189'};
-    response = await dio.post(servicePath['homePageContent'], data: formData);
+    // var formData = {'lon': '115.02932', 'lat': '35.76189'};
+    if (formData == null) {
+      response = await dio.post(servicePath[url]);
+    } else {
+      response = await dio.post(servicePath[url], data: formData);
+    }
+
     if (response.statusCode == 200) {
       return response.data;
     } else {

@@ -34,7 +34,12 @@ class _IndexPageState extends State<IndexPage> {
   ];
 
   //4个页面的数组
-  final List tabBodies = [HomePage(), CategoryPage(), CartPage(), MemberPage()];
+  final List<Widget> tabBodies = [
+    HomePage(),
+    CategoryPage(),
+    CartPage(),
+    MemberPage()
+  ];
   //当前选择的项和页面
   int currentIndex = 0;
   var currentPage;
@@ -67,7 +72,7 @@ class _IndexPageState extends State<IndexPage> {
           });
         },
       ),
-      body: currentPage,
+      body: IndexedStack(index: currentIndex, children: tabBodies),
     );
   }
 }
