@@ -21,3 +21,4 @@ samples, guidance on mobile development, and a full API reference.
 - 屏幕适配：手机屏幕大小不同，布局难免有所不同，本项目中对各种手机进行适配。
 - 上拉加载：实现app的上拉加载功能
 - 拨打电话：[url_launcher](https://github.com/flutter/plugins/tree/master/packages/url_launcher)
+- 下拉加载：[flutter_easyrefresh](https://github.com/xuelongqy/flutter_easyrefresh)
