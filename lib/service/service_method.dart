@@ -5,7 +5,7 @@ import '../config/service_url.dart';
 
 //获取首页主体内容
 
-Future request(url, formData) async {
+Future request(url, {formData}) async {
   try {
     print('开始获取首数据...............');
     Response response;
