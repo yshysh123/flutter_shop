@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage>
             List<Map> floor3 = (data['data']['floor3'] as List).cast();
             return EasyRefresh(
               refreshFooter: ClassicsFooter(
-                key:_footerkey,
+                key: _footerkey,
                 bgColor: Colors.white,
                 textColor: Colors.pink,
                 moreInfoColor: Colors.pink,
@@ -250,6 +250,7 @@ class TopNavigator extends StatelessWidget {
       height: ScreenUtil().setHeight(340),
       padding: EdgeInsets.all(3.0),
       child: GridView.count(
+        physics: NeverScrollableScrollPhysics(),
         //每行个数
         crossAxisCount: 5,
         padding: EdgeInsets.all(5.0),
