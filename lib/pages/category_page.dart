@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../model/category.dart';
 import 'package:provide/provide.dart';
 import '../provide/child_category.dart';
+import '../model/categoryGoodsList.dart';
 
 class CategoryPage extends StatefulWidget {
   _CategoryPageState createState() => _CategoryPageState();
@@ -173,6 +174,8 @@ class CategoryGoodsList extends StatefulWidget {
 }
 
 class _CategoryGoodsListState extends State<CategoryGoodsList> {
+  List list = [];
+
   @override
   void initState() {
     _getGoddsList();
@@ -182,7 +185,14 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('商品列表'),
+      width: ScreenUtil().setWidth(570),
+      height: ScreenUtil().setHeight(1000),
+      child: ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          return _listWidget(index);
+        },
+      ),
     );
   }
 
@@ -191,7 +201,86 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
 
     await request('getMallGoods', formData: data).then((val) {
       var data = json.decode(val.toString());
-      print('分类商品列表：>>>>>>>>>>>>>${data}');
+      CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
+      setState(() {
+        list = goodsList.data;
+      });
     });
+  }
+
+  Widget _goodsImage(index) {
+    return Container(
+      width: ScreenUtil().setWidth(200),
+      child: Image.network(list[index].image),
+    );
+  }
+
+  Widget _goodsName(index) {
+    return Container(
+      padding: EdgeInsets.all(5.0),
+      width: ScreenUtil().setWidth(370),
+      child: Text(
+        list[index].goodsName,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          fontSize: ScreenUtil().setSp(28),
+        ),
+      ),
+    );
+  }
+
+  Widget _goodsPrice(index) {
+    return Container(
+      margin: EdgeInsets.only(top: 20.0),
+      width: ScreenUtil().setWidth(370),
+      child: Row(
+        children: <Widget>[
+          Text(
+            '价格：¥${list[index].presentPrice}',
+            style: TextStyle(
+              color: Colors.pink,
+              fontSize: ScreenUtil().setSp(30),
+            ),
+          ),
+          Text(
+            '¥${list[index].oriPrice}',
+            style: TextStyle(
+              color: Colors.black26,
+              decoration: TextDecoration.lineThrough,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _listWidget(index) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(
+              width: 1.0,
+              color: Colors.black12,
+            ),
+          ),
+        ),
+        child: Row(
+          children: <Widget>[
+            _goodsImage(index),
+            Column(
+              children: <Widget>[
+                _goodsName(index),
+                _goodsPrice(index),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
